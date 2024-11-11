@@ -16,8 +16,11 @@ By far the most important thing I've written is my [My PhD Thesis](/pdfs/Thesis.
 Some talks I've given:
 
 [An introductory talk to a seminar on the Langlands Program](/pdfs/LanglandsSeminarIntro.pdf)
+
 [A talk on Galois representations coming from automorphic representations](/pdfs/GaloisRepsFromAutoReps.pdf)
+
 [A talk on the Fargues-Fontaine Curve](/pdfs/TheCurve.pdf)
+
 
 ## AI Alignment
 
