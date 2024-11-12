@@ -9,9 +9,17 @@ layout: default
 
 	  {%- if site.posts.size > 0 -%}
 	    <h1 class="post-title">{{ page.list_title | default: "Posts" }}</h1>
+
+      <!-- Buttons to filter posts by category -->
+      <div class="post-filter-buttons">
+        <button onclick="filterPosts('all')">All</button>
+        <button onclick="filterPosts('maths')">Maths</button>
+        <button onclick="filterPosts('AIAlignment')">AI Alignment</button>
+      </div>
+
 	    <ul class="post-list">
 	      {%- for post in site.posts -%}
-	      <li>
+	      <li class="post-item" data-category="{{ post.categories | join: ' ' }}">
 	        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 	        <span class="post-meta">{{ post.date | date: date_format }}</span>
 	        <h3>
@@ -29,4 +37,18 @@ layout: default
 	    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
 	  {%- endif -%}
    </div>
+
+  <script>
+    function filterPosts(category) {
+      const posts = document.querySelectorAll('.post-item');
+      posts.forEach(post => {
+        if (category === 'all' || post.dataset.category.includes(category)) {
+          post.style.display = 'list-item';
+        } else {
+          post.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
 </article>
