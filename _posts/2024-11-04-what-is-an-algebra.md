@@ -2,7 +2,7 @@
 layout: post
 title:  "What is an Algebra?"
 date:   2024-11-04 13:22:01 +0000
-published: false
+published: true
 categories: maths
 tags: concept algebra history Diophantus arabic Hilbert
 ---
