@@ -8,8 +8,8 @@ tags: concept algebra history Diophantus arabic Hilbert
 
 This post is the first of a 3 part series:
 1. Here, we will discuss what algebra is, and how that relates to the notion of 'an algebra'. 
-2. In the [second post]({% post_url 2024-11-11-history-of-algebra %}), we will discuss the historical development of algebra, and some of the problems it was used for.
-3. [Finally]({% post_url 2024-11-18-modern-algebra %}), we will discuss the usage of algebra in modern mathematics, and see how wide ranging it really is as a subject.
+2. In the second post, we will discuss the historical development of algebra, and some of the problems it was used for.
+3. Finally, we will discuss the usage of algebra in modern mathematics, and see how wide ranging it really is as a subject.
 
 But first, let's start at the beginning:
 
