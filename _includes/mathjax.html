@@ -9,6 +9,12 @@
     },
     options: {
       processEscapes: true
+    },
+    startup: {
+      pageReady: () => {
+	console.log("MathJax is Ready!");
+	return MathJax.startup.defaultPageReady();
+      }
     }
   };
 </script>
