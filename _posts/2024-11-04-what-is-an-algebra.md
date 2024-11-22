@@ -7,10 +7,16 @@ published: false
 tags: concept algebra history Diophantus arabic Hilbert
 ---
 
+A note on all my posts: these posts are intended to be readable without having to delve into actual mathematics you are uncomfortable with. If you don't understand an equation, that's ok just read the text and hopefully you will get an idea of the mathematical motivation for it anyway. If you are trying to engage on a more technical level, there are a number of drop-down sections that contain proofs/harder material - otherwise, just ignore these, they are not consequential to the flow of the post. Enjoy!
+
+- TOC
+{:toc}
+
 This post is the first of a 3 part series:
 1. Here, we will discuss what algebra is, and how that relates to the notion of 'an algebra'. 
 2. In the second post, we will discuss the historical development of algebra, and some of the problems it was used for.
 3. Finally, we will discuss the usage of algebra in modern mathematics, and see how wide ranging it really is as a subject.
+
 
 But first, let's start at the beginning:
 
@@ -63,7 +69,7 @@ However they are soon replaced by the more intimidating-looking 'Find $x$' quest
 > 
 > Find $x$.
 
-This step into abstraction follows the historical development of algebra that we'll discuss later. We condense this historical and dramatic perspective shift into perhaps two lessons aged 13. No wonder so many people find it so contrived! From that point onwards algebra is known as "the stuff with the $x$'s and $y$'s". We learn more and more 'rules', like how to factor:
+This step into abstraction follows the historical development of algebra that we'll discuss later. We condense this historical and dramatic perspective shift into perhaps two lessons aged 13. No wonder so many people find it so contrived! From that point onwards algebra is often known as "the stuff with the $x$'s and $y$'s". We learn more and more 'rules', like how to factor:
 
 $$
 xy+xz = x(y+x),
@@ -128,7 +134,38 @@ Here's an analogy: many people refer to mathematics as a game, where you make a 
 
 # Algebras - Laying Out the Rules
 
-So, if an algebra is like the board, pieces and rules, how do we get a handle on one in real life? Well, you need a collection of "numbers" that you are allowed to add and multiply together, and you need a collection of rules that tell you how to manipulate these numbers. Let's get mathematical:
+So, if an algebra is like the board, pieces and rules, how do we get a handle on one in real life? Well, you need a collection of "numbers" that you are allowed to add and multiply together, and you need a collection of rules that tell you how to manipulate these numbers. We will get to the definition in a moment, but first I want to clarify the modular (clock) arithmetic setting.
+
+What are the possible positions of the minute hand? Well, 
+
+$$
+0,1,2,...,58,59
+$$
+
+are all the possibilities. So in this setting, our algebra has only sixty "numbers" in it. 
+
+> <summary> New Perspective: </summary>
+> Now, the idea is that once we've chosen an algebra, the numbers in that algebra are all we have available - that's the whole universe. It's like entering your favourite TV/film series - once you've entered that world, you know the characters and all the interactions are between those characters. 
+> 
+> Frodo isn't about to pop up in the Marvel Universe, they are completely separate structures. You should think of the numbers in an algebra as being characters in their own universe. (Similarly it wouldn't mean much to place a chess queen on the third square of Snakes & Ladders - wrong game!)
+> 
+> This might seem very easy at first, but things can start getting confusing, especially since we only have so many symbols to describe things with. After 1000 more Marvel movies they are going to run out of names and it's possible a "Frodo" will appear, but we will have to be aware that despite having the same name, they are not the same entity!
+
+So it's important to separate these algebras/universes/games in our mind. To do this, we're going to make a small (but hopefully clarifying) change of notation. Now, when we talk about minutes on a clock, I will write the number in square bracket, e.g. $[30]$. I could equally have chosen the symbol :droplet: instead of $[30]$. Now we get equations like
+
+$$
+[30]+[30]+[30] = [30]
+$$
+
+or 
+
+$$
+:droplet: + :droplet: + :droplet: = :droplet:
+$$
+
+The point being, that whatever quantity this is, we now think of it as being completely separate from the usual number $30$ (for which $30+30+30=90$).
+
+Let's get mathematical
 
 > <summary> Definition: </summary>
 > An **algebra**[^2] consists of a set, $S$, with two operations, addition and multiplication. That is, given any two elements of $S$, call them $x$ and $y$, I can add them and multiply them to get elements $x+y$ and $x \times y$ in $S$. Furthermore, the following things must happen (these are called the **axioms**):
@@ -156,13 +193,10 @@ So, if an algebra is like the board, pieces and rules, how do we get a handle on
 > </li>
 > </ol>
 
-Ok ok, I said "how do we get a handle on one in real life", and then splurted out a whole lot of axioms. Whoops. Let's take a step back and look at our example of the minutes of an hour. I've already told you that we are in an algebra, so let's call that algebra $A$. What are the possible positions of the minute hand? Well, 
+Ok ok, I said "how do we get a handle on one in real life", and then splurted out a whole lot of axioms. Whoops. Let's take a step back and look at our example of the minutes of an hour. I've already told you that we are in an algebra, so let's call that algebra $A$. 
 
-$$
-0,1,2,...,58,59
-$$
 
-are all the possibilities. So, there are sixty "numbers" in our algebra, i.e. the set $S$ in our definition of an algebra in this case is
+So, there are sixty "numbers" in our algebra, i.e. the set $S$ in our definition of an algebra in this case is
 
 $$
 S = \{ 0,1,...,58,59 \}.
