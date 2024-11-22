@@ -19,7 +19,7 @@ layout: default
 
 	    <ul class="post-list">
 	      {%- for post in site.posts -%}
-	      <li class="post-item" data-category="{{ post.categories | join: ' ' }}">
+				<li class="post-item" data-category="{{ post.categories | join: ' ' }}" data-hidden="{{ post.hidden | downcase }}">
 	        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 	        <span class="post-meta">{{ post.date | date: date_format }}</span>
 	        <h3>
@@ -42,13 +42,15 @@ layout: default
     function filterPosts(category) {
       const posts = document.querySelectorAll('.post-item');
       posts.forEach(post => {
-        if (category === 'all' || post.dataset.category.includes(category)) {
+        if ((category === 'all' || post.dataset.category.includes(category)) && post.dataset.hidden !== 'true') {
           post.style.display = 'list-item';
         } else {
           post.style.display = 'none';
         }
       });
     }
+		
+		filterPosts('all');
   </script>
 
 </article>
