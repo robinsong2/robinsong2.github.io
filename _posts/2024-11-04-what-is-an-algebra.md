@@ -17,7 +17,7 @@ One of the most common questions I get when people read a snippet of maths that 
 
 > "What do you mean by *an algebra*? Isn't algebra something you do?" 
 
-Reflecting on this got me thinking about perspectives mathematicians that may be quite different to a lay-person's perspective on mathematics, and I hope to communicate a little bit of that here. This post is the first of a 3 part series:
+Reflecting on this got me thinking about perspectives that mathematicians have that may be quite different to a lay-person's perspective on mathematics, and I hope to communicate a little bit of that here. This post is the first of a 3 part series:
 1. Here, we will discuss what algebra is, and how that relates to the notion of 'an algebra'. 
 2. In the second post, we will discuss the historical development of algebra, and some of the problems it was used for.
 3. Finally, we will discuss the usage of algebra in modern mathematics, and see how wide ranging it really is as a subject.
