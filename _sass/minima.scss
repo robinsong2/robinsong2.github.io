@@ -73,3 +73,19 @@ $on-laptop:        1200px !default;
 .post-filter-buttons button:focus {
   outline: none; /* Remove outline on focus */
 }
+
+#sidebar {
+  width: 25%;
+  float: right;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-box {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
