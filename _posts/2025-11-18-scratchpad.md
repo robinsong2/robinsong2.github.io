@@ -7,6 +7,12 @@ category: meta
 
 Look at ICM talks
 
+Meta
+- Why do unreal things
+
+ARC related
+- Information Theory
+
 Concepts
 - Groups (including frieze and art)
 - Categories
