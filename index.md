@@ -1,7 +1,6 @@
 ---
 layout: home
 title: About
-permalink: /about/
 ---
  
 I am an AI Safety Researcher working for the [Alignment Research Center](https://www.alignment.org/). I live and work remotely in London, but visit Berkeley occasionally. 
