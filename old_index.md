@@ -3,7 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
-title: Posts
-nav_exclude: true
+# title: Posts
+# uncomment the above to reinclude this
 ---
 
