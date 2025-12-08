@@ -10,7 +10,7 @@ Prior to working for ARC, I did a PhD from 2019-2024 at the University of Oxford
 I did my undergraduate and masters degrees in Mathematics at Cambridge University, where I was a member of Gonville & Caius College.
 ## Mathematics
 
-By far the most important thing I've written is my [My PhD Thesis](/pdfs/Thesis.pdf), submitted in May 2024.
+Here is my [My PhD Thesis](/pdfs/Thesis.pdf), submitted in May 2024.
 
 Some talks I've given:
 
