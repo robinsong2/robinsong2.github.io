@@ -4,6 +4,6 @@
 
 layout: home
 title: Posts
-nav_exclude: True
+nav_exclude: true
 ---
 
