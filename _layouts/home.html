@@ -4,13 +4,25 @@ layout: default
 
 <article class="post">
 
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+</article>
+
+<!--
+<article class="post">
+
   <div class="post-content">
 	  {{ content }}
 
 	  {%- if site.posts.size > 0 -%}
 	    <h1 class="post-title">{{ page.list_title | default: "Posts" }}</h1>
 
-      <!-- Buttons to filter posts by category -->
       <div class="post-filter-buttons">
         <button onclick="filterPosts('all')">All</button>
         <button onclick="filterPosts('maths')">Maths</button>
@@ -52,5 +64,5 @@ layout: default
 		
 		filterPosts('all');
   </script>
-
+-->
 </article>
