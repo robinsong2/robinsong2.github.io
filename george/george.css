@@ -84,13 +84,14 @@
 .browse-search:focus { outline: none; border-color: #2a7ae2; box-shadow: 0 0 0 3px rgba(42,122,226,0.12); background: #fff; }
 .browse-count { font-size: 0.85rem; color: #828282; white-space: nowrap; }
 
-.browse-random-bar { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.browse-random-bar { display: flex; flex-direction: column; align-items: center; gap: 0.65rem; margin-bottom: 1.75rem; }
 .btn-open-random {
-  background: #2a7ae2; color: #fff; border: none; border-radius: 5px;
-  padding: 0.42rem 1.05rem; font-size: 0.88rem; font-family: inherit; font-weight: 600;
-  cursor: pointer; transition: background 0.15s; white-space: nowrap;
+  background: #2a7ae2; color: #fff; border: none; border-radius: 8px;
+  padding: 0.75rem 2.5rem; font-size: 1.4rem; font-family: inherit; font-weight: 600;
+  cursor: pointer; transition: background 0.15s, transform 0.08s; white-space: nowrap;
 }
 .btn-open-random:hover { background: #1a6ad2; }
+.btn-open-random:active { transform: scale(0.97); }
 
 /* ── Tile grid ── */
 .tiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
