@@ -7,7 +7,6 @@
   <title>Links — George Robinson</title>
   <link rel="stylesheet" href="/assets/main.css">
   <style>
-    /* ── Tabs ── */
     .links-page-title {
       font-size: 2rem;
       font-weight: 400;
@@ -16,11 +15,11 @@
       color: #111;
     }
 
+    /* ── Tabs ── */
     .tab-bar {
       display: flex;
       border-bottom: 2px solid #e8e8e8;
       margin-bottom: 2rem;
-      gap: 0;
     }
 
     .tab-btn {
@@ -48,12 +47,12 @@
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /* ── Shared components ── */
+    /* ── Shared ── */
     .tag-pill {
       display: inline-block;
-      padding: 0.2rem 0.65rem;
+      padding: 0.18rem 0.6rem;
       border-radius: 20px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       background: #eaf0fc;
       color: #2a7ae2;
@@ -67,23 +66,19 @@
     }
 
     .tag-toggle {
-      padding: 0.3rem 0.9rem;
+      padding: 0.28rem 0.85rem;
       border: 2px solid #2a7ae2;
       border-radius: 20px;
       background: #fff;
       color: #2a7ae2;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
       transition: background 0.12s, color 0.12s;
     }
 
-    .tag-toggle.on {
-      background: #2a7ae2;
-      color: #fff;
-    }
-
+    .tag-toggle.on { background: #2a7ae2; color: #fff; }
     .tag-toggle:hover:not(.on) { background: #eaf0fc; }
 
     .no-tags-note {
@@ -92,9 +87,9 @@
       font-style: italic;
     }
 
-    /* ── Discover tab ── */
+    /* ── Discover ── */
     .discover-wrap {
-      max-width: 560px;
+      max-width: 580px;
       margin: 2rem auto;
       text-align: center;
     }
@@ -112,12 +107,7 @@
       margin-bottom: 2rem;
     }
 
-    .discover-actions {
-      margin-top: 1.5rem;
-    }
-
     .btn-open {
-      display: inline-block;
       background: #2a7ae2;
       color: #fff;
       border: none;
@@ -128,7 +118,6 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.15s, transform 0.08s;
-      letter-spacing: 0.01em;
     }
 
     .btn-open:hover { background: #1a6ad2; }
@@ -144,7 +133,7 @@
 
     .open-result.err { color: #c0392b; }
 
-    /* ── Browse tab ── */
+    /* ── Browse ── */
     .browse-controls {
       display: flex;
       flex-wrap: wrap;
@@ -167,7 +156,7 @@
     .browse-search:focus {
       outline: none;
       border-color: #2a7ae2;
-      box-shadow: 0 0 0 3px rgba(42, 122, 226, 0.12);
+      box-shadow: 0 0 0 3px rgba(42,122,226,0.12);
       background: #fff;
     }
 
@@ -180,37 +169,53 @@
     .tiles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.1rem;
+      gap: 1rem;
     }
 
-    @media (max-width: 900px) {
-      .tiles-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 580px) {
-      .tiles-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .tiles-grid { grid-template-columns: 1fr; } }
 
     .tile {
       background: #fff;
       border: 1px solid #e8e8e8;
       border-radius: 10px;
-      padding: 1.1rem 1.1rem 0.9rem;
+      padding: 1rem 1rem 0.85rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
       transition: box-shadow 0.15s, border-color 0.15s;
       position: relative;
+      overflow: hidden;
     }
 
     .tile:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.09);
       border-color: #ccc;
     }
 
+    /* × appears only on tile hover */
+    .tile-remove {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.65rem;
+      background: none;
+      border: none;
+      color: #bbb;
+      font-size: 1.15rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      border-radius: 3px;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.12s, background 0.12s;
+    }
+
+    .tile:hover .tile-remove { opacity: 1; }
+    .tile-remove:hover { color: #c0392b; background: #fdecea; }
+
     .tile-title {
       font-weight: 600;
-      font-size: 0.97rem;
+      font-size: 0.95rem;
       color: #2a7ae2;
       text-decoration: none;
       display: -webkit-box;
@@ -218,14 +223,14 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       line-height: 1.35;
-      padding-right: 1.5rem;
+      padding-right: 1.4rem;
     }
 
     .tile-title:hover { text-decoration: underline; }
 
     .tile-url {
-      font-size: 0.75rem;
-      color: #aaa;
+      font-size: 0.74rem;
+      color: #bbb;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -234,26 +239,10 @@
     .tile-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: 0.22rem;
       margin-top: auto;
       padding-top: 0.5rem;
     }
-
-    .tile-remove {
-      position: absolute;
-      top: 0.65rem;
-      right: 0.7rem;
-      background: none;
-      border: none;
-      color: #ccc;
-      font-size: 1.1rem;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0.1rem 0.2rem;
-      transition: color 0.12s;
-    }
-
-    .tile-remove:hover { color: #c0392b; }
 
     .empty-browse {
       grid-column: 1 / -1;
@@ -261,17 +250,12 @@
       color: #aaa;
       font-style: italic;
       padding: 3rem 0;
-      font-size: 0.92rem;
     }
 
-    /* ── Add tab ── */
-    .add-form {
-      max-width: 600px;
-    }
+    /* ── Add ── */
+    .add-form { max-width: 600px; }
 
-    .field {
-      margin-bottom: 1.1rem;
-    }
+    .field { margin-bottom: 1.1rem; }
 
     .field label {
       display: block;
@@ -281,10 +265,7 @@
       margin-bottom: 0.3rem;
     }
 
-    .field label .opt {
-      font-weight: 400;
-      color: #aaa;
-    }
+    .field label .opt { font-weight: 400; color: #aaa; }
 
     .field input {
       width: 100%;
@@ -301,15 +282,11 @@
     .field input:focus {
       outline: none;
       border-color: #2a7ae2;
-      box-shadow: 0 0 0 3px rgba(42, 122, 226, 0.12);
+      box-shadow: 0 0 0 3px rgba(42,122,226,0.12);
       background: #fff;
     }
 
-    .field-hint {
-      font-size: 0.78rem;
-      color: #aaa;
-      margin-top: 0.3rem;
-    }
+    .field-hint { font-size: 0.78rem; color: #aaa; margin-top: 0.3rem; }
 
     .btn-add {
       background: #2a7ae2;
@@ -375,23 +352,21 @@
       <button class="tab-btn"        data-tab="add"      onclick="switchTab('add')">Add a link</button>
     </div>
 
-    <!-- ── Discover ── -->
+    <!-- Discover -->
     <div id="pane-discover" class="tab-pane active">
       <div class="discover-wrap">
         <h2 class="discover-heading">What are you in the mood for?</h2>
         <p class="discover-sub">
-          Toggle some tags to filter, then let chance decide —
+          Toggle tags to filter by vibe, then let chance decide —
           or leave everything unselected to pick from the whole collection.
         </p>
         <div class="tag-toggle-bar" id="discoverTags"></div>
-        <div class="discover-actions">
-          <button class="btn-open" onclick="openRandom()">Open a random link</button>
-        </div>
+        <button class="btn-open" onclick="openRandom()">Open a random link</button>
         <div class="open-result" id="openResult"></div>
       </div>
     </div>
 
-    <!-- ── Browse ── -->
+    <!-- Browse -->
     <div id="pane-browse" class="tab-pane">
       <div class="browse-controls">
         <input class="browse-search" id="browseSearch" type="text"
@@ -402,7 +377,7 @@
       <div class="tiles-grid" id="tilesGrid"></div>
     </div>
 
-    <!-- ── Add ── -->
+    <!-- Add -->
     <div id="pane-add" class="tab-pane">
       <div class="add-form">
         <div class="field">
@@ -416,7 +391,7 @@
         <div class="field">
           <label for="fTags">Tags <span class="opt">(comma-separated)</span></label>
           <input type="text" id="fTags" placeholder="music, videos, learning" autocomplete="off">
-          <p class="field-hint">e.g. "music, art, inspiration" — used to filter when discovering</p>
+          <p class="field-hint">e.g. "london, events, philosophy"</p>
         </div>
         <button class="btn-add" onclick="addLink()">Save link</button>
         <span class="add-feedback" id="addFeedback"></span>
@@ -447,12 +422,120 @@
 <script>
   const KEY = 'grlinks-v1';
 
+  // ── Seed data ──────────────────────────────────────────────────────────────
+  const SEED = [
+    // London / Events / Lectures
+    { url: 'https://www.pintsofknowledge.com',          title: 'Pints of Knowledge',          tags: ['london', 'events', 'talks', 'science', 'philosophy', 'community'] },
+    { url: 'https://www.intelligencesquared.com',       title: 'Intelligence Squared',         tags: ['events', 'debates', 'culture', 'politics', 'ideas'] },
+    { url: 'https://www.theschooloflife.com',           title: 'The School of Life',           tags: ['psychology', 'philosophy', 'relationships'] },
+    { url: 'https://howtoacademy.com',                  title: 'How To Academy',               tags: ['london', 'events', 'talks', 'authors', 'ideas'] },
+    { url: 'https://www.thersa.org',                    title: 'The RSA',                      tags: ['london', 'events', 'society', 'economics', 'creativity', 'policy'] },
+    { url: 'https://www.rigb.org',                      title: 'Royal Institution',            tags: ['london', 'events', 'science', 'lectures', 'history'] },
+    { url: 'https://www.gresham.ac.uk',                 title: 'Gresham College',              tags: ['london', 'events', 'lectures', 'mathematics', 'history', 'philosophy', 'free'] },
+    { url: 'https://conwayhall.org.uk',                 title: 'Conway Hall',                  tags: ['london', 'events', 'ethics', 'politics', 'literature', 'music'] },
+    { url: 'https://www.londonreviewbookshop.co.uk',    title: 'London Review Bookshop',       tags: ['london', 'events', 'literary', 'talks', 'essays'] },
+    { url: 'https://iai.tv',                            title: 'IAI TV',                       tags: ['philosophy', 'essays', 'debates', 'ideas'] },
+    { url: 'https://www.theidler.co.uk',                title: 'The Idler',                    tags: ['culture', 'conversation', 'leisure', 'salons'] },
+    { url: 'https://www.serpentinegalleries.org',       title: 'Serpentine Galleries',         tags: ['london', 'events', 'art', 'architecture', 'design'] },
+    { url: 'https://www.somersethouse.org.uk',          title: 'Somerset House',               tags: ['london', 'events', 'arts', 'culture', 'festivals'] },
+    { url: 'https://www.barbican.org.uk',               title: 'Barbican Centre',              tags: ['london', 'events', 'film', 'music', 'theatre', 'talks'] },
+    { url: 'https://www.ica.art',                       title: 'ICA',                          tags: ['london', 'events', 'art', 'film', 'avant-garde'] },
+    { url: 'https://www.bishopsgate.org.uk',            title: 'Bishopsgate Institute',        tags: ['london', 'events', 'history', 'archives', 'talks'] },
+    { url: 'https://thephotographersgallery.org.uk',    title: "The Photographers' Gallery",   tags: ['london', 'events', 'photography', 'visual'] },
+    { url: 'https://www.meetup.com',                    title: 'Meetup',                       tags: ['events', 'community', 'social', 'groups'] },
+    { url: 'https://www.eventbrite.co.uk',              title: 'Eventbrite',                   tags: ['london', 'events', 'discovery'] },
+    { url: 'https://dice.fm',                           title: 'Dice FM',                      tags: ['london', 'events', 'music', 'live', 'culture'] },
+    { url: 'https://www.designmynight.com',             title: 'Design My Night',              tags: ['london', 'events', 'social', 'experiences'] },
+    { url: 'https://lu.ma',                             title: 'Luma',                         tags: ['events', 'community', 'intellectual'] },
+
+    // Writing / Essays / Culture
+    { url: 'https://aeon.co',                           title: 'Aeon',                         tags: ['essays', 'philosophy', 'science', 'culture'] },
+    { url: 'https://psyche.co',                         title: 'Psyche',                       tags: ['psychology', 'philosophy', 'essays', 'meaning'] },
+    { url: 'https://thepointmag.com',                   title: 'The Point Magazine',           tags: ['essays', 'philosophy', 'culture', 'moral-life'] },
+    { url: 'https://www.thedriftmag.com',               title: 'The Drift',                    tags: ['essays', 'literary', 'culture'] },
+    { url: 'https://www.newyorker.com',                 title: 'The New Yorker',               tags: ['journalism', 'essays', 'culture', 'criticism'] },
+    { url: 'https://www.lrb.co.uk',                     title: 'London Review of Books',       tags: ['essays', 'criticism', 'intellectual', 'culture'] },
+    { url: 'https://newleftreview.org',                 title: 'New Left Review',              tags: ['politics', 'theory', 'essays', 'long-form'] },
+    { url: 'https://worksinprogress.co',                title: 'Works in Progress',            tags: ['science', 'technology', 'society', 'progress', 'mathematics'] },
+    { url: 'https://www.noemamag.com',                  title: 'Noema Magazine',               tags: ['philosophy', 'geopolitics', 'futures', 'essays'] },
+    { url: 'https://thebrowser.com',                    title: 'The Browser',                  tags: ['reading', 'curated', 'essays', 'discovery'] },
+    { url: 'https://longreads.com',                     title: 'Longreads',                    tags: ['essays', 'nonfiction', 'journalism', 'long-form'] },
+    { url: 'https://narratively.com',                   title: 'Narratively',                  tags: ['stories', 'nonfiction', 'essays', 'human-interest'] },
+    { url: 'https://www.themarginalian.org',            title: 'The Marginalian',              tags: ['literature', 'philosophy', 'creativity', 'culture', 'discovery'] },
+    { url: 'https://www.publicbooks.org',               title: 'Public Books',                 tags: ['essays', 'humanities', 'criticism'] },
+    { url: 'https://3quarksdaily.com',                  title: '3 Quarks Daily',               tags: ['essays', 'intellectual', 'eclectic', 'science', 'culture'] },
+    { url: 'https://nautil.us',                         title: 'Nautilus',                     tags: ['science', 'philosophy', 'essays', 'storytelling'] },
+    { url: 'https://www.theparisreview.org',            title: 'The Paris Review',             tags: ['literary', 'fiction', 'interviews', 'essays'] },
+
+    // Mathematics / Science / Technical
+    { url: 'https://www.quantamagazine.org',            title: 'Quanta Magazine',              tags: ['mathematics', 'physics', 'science', 'cs'] },
+    { url: 'https://asteriskmag.com',                   title: 'Asterisk Magazine',            tags: ['rationality', 'science', 'essays', 'society'] },
+    { url: 'https://www.lesswrong.com',                 title: 'LessWrong',                    tags: ['rationality', 'ai', 'philosophy', 'ideas'] },
+    { url: 'https://ncatlab.org',                       title: 'nLab',                         tags: ['mathematics', 'category-theory', 'technical'] },
+    { url: 'https://mathoverflow.net',                  title: 'MathOverflow',                 tags: ['mathematics', 'research', 'technical'] },
+    { url: 'https://terrytao.wordpress.com',            title: "Terence Tao's Blog",           tags: ['mathematics', 'exposition', 'research'] },
+    { url: 'https://distill.pub',                       title: 'Distill',                      tags: ['machine-learning', 'visual', 'technical', 'science'] },
+    { url: 'https://www.quantitude.co',                 title: 'Quantitude',                   tags: ['mathematics', 'culture', 'exposition'] },
+    { url: 'https://www.ribbonfarm.com',                title: 'Ribbonfarm',                   tags: ['systems-thinking', 'culture', 'essays', 'ideas'] },
+
+    // Creative / Visual / Inspiration
+    { url: 'https://www.are.na',                        title: 'Are.na',                       tags: ['ideas', 'visual', 'creative', 'inspiration', 'research'] },
+    { url: 'https://kottke.org',                        title: 'Kottke',                       tags: ['internet', 'culture', 'curiosity', 'links', 'discovery'] },
+    { url: 'https://www.thisiscolossal.com',            title: 'This is Colossal',             tags: ['art', 'visual', 'inspiration', 'design'] },
+    { url: 'https://www.itsnicethat.com',               title: "It's Nice That",               tags: ['design', 'creative', 'culture', 'visual'] },
+    { url: 'https://www.creativeboom.com',              title: 'Creative Boom',                tags: ['design', 'creative', 'illustration'] },
+    { url: 'https://thecreativeindependent.com',        title: 'The Creative Independent',     tags: ['creative', 'interviews', 'art', 'writing'] },
+    { url: 'https://www.documentjournal.com',           title: 'Document Journal',             tags: ['art', 'fashion', 'philosophy', 'culture'] },
+    { url: 'https://www.cabinetmagazine.org',           title: 'Cabinet Magazine',             tags: ['art', 'intellectual', 'culture', 'strange', 'ideas'] },
+
+    // Finding Interesting People / Communities
+    { url: 'https://partiful.com',                      title: 'Partiful',                     tags: ['social', 'community', 'events'] },
+    { url: 'https://www.hackneywickspaces.org',         title: 'Hackney Wick Spaces',          tags: ['london', 'art', 'community', 'studios'] },
+    { url: 'https://secondhome.io',                     title: 'Second Home',                  tags: ['london', 'events', 'creative', 'community'] },
+    { url: 'https://theconduit.com',                    title: 'The Conduit',                  tags: ['london', 'policy', 'culture', 'community', 'impact'] },
+    { url: 'https://newspeak.house',                    title: 'Newspeak House',               tags: ['london', 'tech', 'politics', 'community'] },
+    { url: 'https://www.theonioncollective.co.uk',      title: 'The Onion Collective',         tags: ['london', 'creative', 'social', 'community'] },
+    { url: 'https://www.independentcinemaoffice.org.uk',title: 'Independent Cinema Office',    tags: ['london', 'events', 'film', 'culture'] },
+
+    // Audio / Storytelling / Podcasts
+    { url: 'https://transom.org',                       title: 'Transom',                      tags: ['radio', 'storytelling', 'audio', 'craft'] },
+    { url: 'https://www.thirdcoastfestival.org',        title: 'Third Coast Festival',         tags: ['audio', 'documentary', 'storytelling'] },
+    { url: 'https://longform.org',                      title: 'Longform',                     tags: ['journalism', 'interviews', 'writing', 'podcasts'] },
+    { url: 'https://www.believermag.com',               title: 'The Believer',                 tags: ['arts', 'literary', 'culture', 'interviews'] },
+    { url: 'https://themoth.org',                       title: 'The Moth',                     tags: ['storytelling', 'live', 'audio', 'community'] },
+    { url: 'https://www.bbc.co.uk',                     title: 'BBC',                          tags: ['documentary', 'audio', 'culture', 'essays', 'uk'] },
+
+    // Random Interesting Internet
+    { url: 'https://www.atlasobscura.com',              title: 'Atlas Obscura',                tags: ['exploration', 'hidden', 'history', 'oddities', 'london', 'discovery'] },
+    { url: 'https://www.slowernews.com',                title: 'Slower News',                  tags: ['media', 'calm', 'culture', 'discovery'] },
+    { url: 'https://theconversation.com',               title: 'The Conversation',             tags: ['science', 'academic', 'explainers', 'society'] },
+    { url: 'https://www.openculture.com',               title: 'Open Culture',                 tags: ['culture', 'free', 'lectures', 'books', 'discovery'] },
+    { url: 'https://fivebooks.com',                     title: 'Five Books',                   tags: ['reading', 'recommendations', 'books', 'discovery'] },
+    { url: 'https://www.wikiwander.com',                title: 'WikiWander',                   tags: ['wikipedia', 'exploration', 'learning', 'discovery'] },
+    { url: 'https://publicdomainreview.org',            title: 'Public Domain Review',         tags: ['history', 'art', 'literature', 'culture', 'strange'] },
+    { url: 'https://www.messynessychic.com',            title: 'Messy Nessy Chic',             tags: ['culture', 'history', 'urban', 'hidden', 'discovery'] },
+  ];
+
+  // ── Storage ──
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
     catch { return []; }
   }
   function save(links) { localStorage.setItem(KEY, JSON.stringify(links)); }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+  function seedLinks() {
+    const links    = load();
+    const existing = new Set(links.map(l => l.url));
+    let added = false;
+    SEED.forEach(s => {
+      if (!existing.has(s.url)) {
+        links.push({ id: uid(), url: s.url, title: s.title, tags: s.tags, addedAt: Date.now() });
+        added = true;
+      }
+    });
+    if (added) save(links);
+  }
 
   function parseTags(str) {
     return [...new Set(str.split(',').map(t => t.trim().toLowerCase()).filter(Boolean))];
@@ -464,7 +547,6 @@
     return [...s].sort();
   }
 
-  // shared tag selection state
   const sel = new Set();
 
   // ── Tabs ──
@@ -484,7 +566,7 @@
 
   function openRandom() {
     const links = load();
-    if (!links.length) { showResult('No links saved yet — add some in the "Add a link" tab.', true); return; }
+    if (!links.length) { showResult('No links saved yet.', true); return; }
     const pool = sel.size ? links.filter(l => l.tags.some(t => sel.has(t))) : links;
     if (!pool.length) { showResult('No links match the selected tags.', true); return; }
     const pick = pool[Math.floor(Math.random() * pool.length)];
@@ -523,7 +605,7 @@
     if (!items.length) {
       const msg = document.createElement('div');
       msg.className = 'empty-browse';
-      msg.textContent = links.length ? 'No links match.' : 'No links yet — add some in the "Add a link" tab.';
+      msg.textContent = links.length ? 'No links match.' : 'No links yet — add some above.';
       grid.appendChild(msg);
       return;
     }
@@ -536,7 +618,8 @@
       rem.className = 'tile-remove';
       rem.title = 'Remove';
       rem.textContent = '×';
-      rem.onclick = () => {
+      rem.onclick = (e) => {
+        e.preventDefault();
         save(load().filter(l => l.id !== link.id));
         const remaining = load();
         sel.forEach(t => { if (!allTags(remaining).includes(t)) sel.delete(t); });
@@ -574,7 +657,7 @@
     });
   }
 
-  // ── Tag bar (shared) ──
+  // ── Tag bar ──
   function renderTagBar(containerId, onToggle) {
     const tags = allTags(load());
     const box  = document.getElementById(containerId);
@@ -592,10 +675,7 @@
       const btn = document.createElement('button');
       btn.className = 'tag-toggle' + (sel.has(tag) ? ' on' : '');
       btn.textContent = tag;
-      btn.onclick = () => {
-        sel.has(tag) ? sel.delete(tag) : sel.add(tag);
-        onToggle();
-      };
+      btn.onclick = () => { sel.has(tag) ? sel.delete(tag) : sel.add(tag); onToggle(); };
       box.appendChild(btn);
     });
   }
@@ -628,8 +708,9 @@
     el._t = setTimeout(() => { el.textContent = ''; }, 2500);
   }
 
-  // ── Keyboard nav in add form ──
   document.addEventListener('DOMContentLoaded', () => {
+    seedLinks();
+
     const ids = ['fUrl', 'fTitle', 'fTags'];
     ids.forEach((id, i) => {
       document.getElementById(id).addEventListener('keydown', e => {
@@ -638,6 +719,7 @@
         else addLink();
       });
     });
+
     renderDiscover();
   });
 </script>
