@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Links — George Robinson</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #111;
+      background: #fdfdfd;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+      color: #111;
+    }
+
+    .subtitle {
+      color: #666;
+      margin: 0 0 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #555;
+      margin: 0 0 1rem;
+    }
+
+    .section {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ---- Form ---- */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.75rem;
+    }
+
+    .form-group:last-of-type { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #333;
+    }
+
+    label .opt {
+      font-weight: 400;
+      color: #999;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fafafa;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus {
+      outline: none;
+      border-color: #2a7ae2;
+      box-shadow: 0 0 0 3px rgba(42, 122, 226, 0.12);
+      background: #fff;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: #999;
+      margin-top: 0.25rem;
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.25rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s, transform 0.08s;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: #2a7ae2;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1a6ad2; }
+
+    .btn-big {
+      padding: 0.7rem 2rem;
+      font-size: 1.05rem;
+      border-radius: 7px;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #c0392b;
+      border: 1px solid currentColor;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .btn-ghost:hover { background: #fdecea; }
+
+    .inline-msg {
+      font-size: 0.88rem;
+      font-weight: 500;
+      min-height: 1.2em;
+    }
+    .inline-msg.ok { color: #2e7d32; }
+    .inline-msg.err { color: #c0392b; }
+
+    /* ---- Random picker ---- */
+    .picker-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .picker-desc {
+      color: #666;
+      margin: 0;
+      font-size: 0.95rem;
+      max-width: 480px;
+    }
+
+    .tag-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 2rem;
+    }
+
+    .tag-btn {
+      padding: 0.3rem 0.85rem;
+      border: 2px solid #2a7ae2;
+      border-radius: 20px;
+      background: #fff;
+      color: #2a7ae2;
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+      font-family: inherit;
+    }
+
+    .tag-btn.active {
+      background: #2a7ae2;
+      color: #fff;
+    }
+
+    .tag-btn:hover:not(.active) { background: #eaf0fc; }
+
+    .no-tags-hint {
+      color: #aaa;
+      font-size: 0.88rem;
+      font-style: italic;
+    }
+
+    .result-banner {
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: none;
+      max-width: 480px;
+      width: 100%;
+    }
+    .result-banner.ok  { background: #e8f5e9; color: #2e7d32; }
+    .result-banner.err { background: #fdecea; color: #c0392b; }
+
+    /* ---- Link list ---- */
+    .list-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .list-header h2 { margin: 0; }
+
+    .count-badge {
+      font-size: 0.82rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    .search-bar {
+      margin-bottom: 1rem;
+    }
+
+    ul.links-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .link-item:last-child { border-bottom: none; }
+
+    .link-info { flex: 1; min-width: 0; }
+
+    .link-title {
+      font-weight: 600;
+      color: #2a7ae2;
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .link-title:hover { text-decoration: underline; }
+
+    .link-url {
+      font-size: 0.78rem;
+      color: #aaa;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .link-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.35rem;
+    }
+
+    .tag-chip {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #eaf0fc;
+      color: #2a7ae2;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #bbb;
+      padding: 2rem 0;
+      font-style: italic;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 580px) {
+      .form-row { grid-template-columns: 1fr; }
+      .container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Links</h1>
+  <p class="subtitle">A personal collection of websites — pick tags and open one at random.</p>
+
+  <!-- ── Random Picker ── -->
+  <div class="section">
+    <h2>Open a random link</h2>
+    <div class="picker-body">
+      <p class="picker-desc">
+        Select one or more tags to filter, then open a random matching link.
+        Leave all tags unselected to pick from everything.
+      </p>
+      <div class="tag-filter" id="tagFilter">
+        <span class="no-tags-hint" id="noTagsHint">Add some links below to get started.</span>
+      </div>
+      <button class="btn btn-primary btn-big" onclick="openRandom()">&#9654; Open random link</button>
+      <div class="result-banner" id="resultBanner"></div>
+    </div>
+  </div>
+
+  <!-- ── Add Link ── -->
+  <div class="section">
+    <h2>Add a link</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="urlInput">URL</label>
+        <input type="url" id="urlInput" placeholder="https://example.com" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="titleInput">Title <span class="opt">(optional)</span></label>
+        <input type="text" id="titleInput" placeholder="My Favourite Site" autocomplete="off" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="tagsInput">Tags <span class="opt">(comma-separated)</span></label>
+      <input type="text" id="tagsInput" placeholder="music, videos, learning" autocomplete="off" />
+      <p class="hint">e.g. "music, art, inspiration" — used to filter when picking a random link</p>
+    </div>
+    <div class="form-footer">
+      <button class="btn btn-primary" onclick="addLink()">Add link</button>
+      <span class="inline-msg" id="addMsg"></span>
+    </div>
+  </div>
+
+  <!-- ── Saved Links ── -->
+  <div class="section">
+    <div class="list-header">
+      <h2>Saved links <span class="count-badge" id="linkCount"></span></h2>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by title, URL or tag…" oninput="renderList()" />
+    </div>
+    <ul class="links-list" id="linksList"></ul>
+  </div>
+
+</div>
+<script>
+  const KEY = 'grlinks-v1';
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+    catch { return []; }
+  }
+
+  function save(links) {
+    localStorage.setItem(KEY, JSON.stringify(links));
+  }
+
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
+  }
+
+  function parseTags(str) {
+    return [...new Set(
+      str.split(',').map(t => t.trim().toLowerCase()).filter(Boolean)
+    )];
+  }
+
+  function allTags(links) {
+    const s = new Set();
+    links.forEach(l => l.tags.forEach(t => s.add(t)));
+    return [...s].sort();
+  }
+
+  // ── selected tags state ──
+  const selected = new Set();
+
+  function toggleTag(tag) {
+    selected.has(tag) ? selected.delete(tag) : selected.add(tag);
+    renderTagFilter();
+  }
+
+  // ── Add ──
+  function addLink() {
+    const url   = document.getElementById('urlInput').value.trim();
+    const title = document.getElementById('titleInput').value.trim();
+    const tags  = parseTags(document.getElementById('tagsInput').value);
+
+    if (!url) { flash('addMsg', 'Please enter a URL.', 'err'); return; }
+    try { new URL(url); } catch {
+      flash('addMsg', 'Please enter a valid URL (including https://).', 'err');
+      return;
+    }
+
+    const links = load();
+    links.push({ id: uid(), url, title: title || url, tags, addedAt: Date.now() });
+    save(links);
+
+    document.getElementById('urlInput').value  = '';
+    document.getElementById('titleInput').value = '';
+    document.getElementById('tagsInput').value  = '';
+    document.getElementById('urlInput').focus();
+
+    flash('addMsg', 'Saved!', 'ok');
+    render();
+  }
+
+  // ── Delete ──
+  function deleteLink(id) {
+    save(load().filter(l => l.id !== id));
+    selected.forEach(t => {
+      if (!allTags(load()).includes(t)) selected.delete(t);
+    });
+    render();
+  }
+
+  // ── Random ──
+  function openRandom() {
+    const links = load();
+    if (!links.length) { showBanner('No links saved yet.', 'err'); return; }
+
+    let pool = selected.size
+      ? links.filter(l => l.tags.some(t => selected.has(t)))
+      : links;
+
+    if (!pool.length) { showBanner('No links match the selected tags.', 'err'); return; }
+
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    window.open(pick.url, '_blank', 'noopener,noreferrer');
+    showBanner('Opening: ' + pick.title, 'ok');
+  }
+
+  // ── Render helpers ──
+  function renderTagFilter() {
+    const links = load();
+    const tags  = allTags(links);
+    const box   = document.getElementById('tagFilter');
+    const hint  = document.getElementById('noTagsHint');
+
+    box.innerHTML = '';
+    if (!tags.length) {
+      hint.style.display = '';
+      box.appendChild(hint);
+      return;
+    }
+    hint.style.display = 'none';
+
+    tags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.className = 'tag-btn' + (selected.has(tag) ? ' active' : '');
+      btn.textContent = tag;
+      btn.onclick = () => toggleTag(tag);
+      box.appendChild(btn);
+    });
+  }
+
+  function renderList() {
+    const links  = load();
+    const query  = document.getElementById('searchInput').value.trim().toLowerCase();
+    const list   = document.getElementById('linksList');
+    const count  = document.getElementById('linkCount');
+
+    count.textContent = links.length ? `(${links.length})` : '';
+
+    let items = [...links].reverse();
+    if (query) {
+      items = items.filter(l =>
+        l.title.toLowerCase().includes(query) ||
+        l.url.toLowerCase().includes(query)   ||
+        l.tags.some(t => t.includes(query))
+      );
+    }
+
+    list.innerHTML = '';
+    if (!items.length) {
+      const li = document.createElement('li');
+      li.className = 'empty-state';
+      li.textContent = query ? 'No links match your search.' : 'No links saved yet.';
+      list.appendChild(li);
+      return;
+    }
+
+    items.forEach(link => {
+      const li   = document.createElement('li');
+      li.className = 'link-item';
+
+      const info = document.createElement('div');
+      info.className = 'link-info';
+
+      const a = document.createElement('a');
+      a.className = 'link-title';
+      a.href = link.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = link.title;
+
+      const urlSpan = document.createElement('span');
+      urlSpan.className = 'link-url';
+      urlSpan.textContent = link.url;
+
+      const tagsDiv = document.createElement('div');
+      tagsDiv.className = 'link-tags';
+      link.tags.forEach(tag => {
+        const chip = document.createElement('span');
+        chip.className = 'tag-chip';
+        chip.textContent = tag;
+        tagsDiv.appendChild(chip);
+      });
+
+      info.appendChild(a);
+      info.appendChild(urlSpan);
+      if (link.tags.length) info.appendChild(tagsDiv);
+
+      const del = document.createElement('button');
+      del.className = 'btn btn-ghost';
+      del.textContent = 'Remove';
+      del.onclick = () => deleteLink(link.id);
+
+      li.appendChild(info);
+      li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
+  function render() {
+    renderTagFilter();
+    renderList();
+  }
+
+  function flash(id, msg, type) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'inline-msg ' + type;
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.textContent = ''; el.className = 'inline-msg'; }, 2500);
+  }
+
+  function showBanner(msg, type) {
+    const el = document.getElementById('resultBanner');
+    el.textContent = msg;
+    el.className = 'result-banner ' + type;
+    el.style.display = 'block';
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.style.display = 'none'; }, 3500);
+  }
+
+  // ── Keyboard shortcuts in form ──
+  document.addEventListener('DOMContentLoaded', () => {
+    const fields = ['urlInput', 'titleInput', 'tagsInput'];
+    fields.forEach((id, i) => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          if (i < fields.length - 1) document.getElementById(fields[i + 1]).focus();
+          else addLink();
+        }
+      });
+    });
+    render();
+  });
+</script>
+</body>
+</html>
