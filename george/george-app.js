@@ -35,13 +35,9 @@ function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById('pane-' + name).classList.add('active');
   document.querySelector('[data-tab="' + name + '"]').classList.add('active');
-  if (name === 'discover') renderDiscover();
-  if (name === 'browse')   renderBrowse();
-  if (window.onExtraTab)   window.onExtraTab(name);
+  if (name === 'browse') renderBrowse();
+  if (window.onExtraTab) window.onExtraTab(name);
 }
-
-// ── Discover ──
-function renderDiscover() { renderTagBar('discoverTags', renderDiscover); }
 
 function openRandom() {
   var links = load();
@@ -231,5 +227,5 @@ document.addEventListener('DOMContentLoaded', function(){
       else addLink();
     });
   });
-  renderDiscover();
+  renderBrowse();
 });

@@ -84,6 +84,14 @@
 .browse-search:focus { outline: none; border-color: #2a7ae2; box-shadow: 0 0 0 3px rgba(42,122,226,0.12); background: #fff; }
 .browse-count { font-size: 0.85rem; color: #828282; white-space: nowrap; }
 
+.browse-random-bar { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.btn-open-random {
+  background: #2a7ae2; color: #fff; border: none; border-radius: 5px;
+  padding: 0.42rem 1.05rem; font-size: 0.88rem; font-family: inherit; font-weight: 600;
+  cursor: pointer; transition: background 0.15s; white-space: nowrap;
+}
+.btn-open-random:hover { background: #1a6ad2; }
+
 /* ── Tile grid ── */
 .tiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 900px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -105,12 +113,12 @@
 .tile.tile-editing .tile-actions { display: none; }
 
 .tile-action-btn {
-  background: none; border: none; cursor: pointer; padding: 0.15rem 0.3rem;
-  border-radius: 3px; font-size: 1rem; line-height: 1.1; color: #ccc;
-  transition: color 0.12s, background 0.12s; font-family: inherit;
+  background: #f0f0f0; border: 1px solid #e0e0e0; cursor: pointer; padding: 0.18rem 0.45rem;
+  border-radius: 4px; font-size: 0.85rem; line-height: 1.2; color: #888;
+  transition: color 0.12s, background 0.12s, border-color 0.12s; font-family: inherit;
 }
-.tile-edit-btn:hover  { color: #555; background: #f0f0f0; }
-.tile-delete-btn:hover { color: #c0392b; background: #fdecea; }
+.tile-edit-btn:hover  { color: #333; background: #e4e4e4; border-color: #ccc; }
+.tile-delete-btn:hover { color: #c0392b; background: #fdecea; border-color: #f5c6c6; }
 
 .tile-title {
   font-weight: 600; font-size: 0.95rem; color: #2a7ae2; text-decoration: none;

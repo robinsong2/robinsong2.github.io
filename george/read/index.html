@@ -47,28 +47,21 @@
     <h1 class="george-page-title">Read</h1>
 
     <div class="tab-bar">
-      <button class="tab-btn active" data-tab="discover" onclick="switchTab('discover')">Discover</button>
-      <button class="tab-btn"        data-tab="browse"   onclick="switchTab('browse')">Browse</button>
-      <button class="tab-btn"        data-tab="add"      onclick="switchTab('add')">Add a link</button>
+      <button class="tab-btn active" data-tab="browse" onclick="switchTab('browse')">Browse</button>
+      <button class="tab-btn"        data-tab="add"    onclick="switchTab('add')">Add a link</button>
     </div>
 
-    <div id="pane-discover" class="tab-pane active">
-      <div class="discover-wrap">
-        <h2 class="discover-heading">What are you in the mood to read?</h2>
-        <p class="discover-sub">Toggle tags to filter, or leave everything unselected to pick from the whole collection.</p>
-        <div class="tag-toggle-bar" id="discoverTags"></div>
-        <button class="btn-open" onclick="openRandom()">Open a random link</button>
-        <div class="open-result" id="openResult"></div>
-      </div>
-    </div>
-
-    <div id="pane-browse" class="tab-pane">
+    <div id="pane-browse" class="tab-pane active">
       <div class="browse-controls">
         <input class="browse-search" id="browseSearch" type="text"
                placeholder="Search by title, URL or tag…" oninput="renderBrowse()">
         <span class="browse-count" id="browseCount"></span>
       </div>
       <div class="tag-toggle-bar" id="browseTags"></div>
+      <div class="browse-random-bar">
+        <button class="btn-open-random" onclick="openRandom()">Open random</button>
+        <div class="open-result" id="openResult"></div>
+      </div>
       <div class="tiles-grid" id="tilesGrid"></div>
     </div>
 
