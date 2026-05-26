@@ -12,9 +12,7 @@
 
 <header class="site-header" role="banner">
   <div class="wrapper">
-    <div class="site-banner">
-      <img src="/imgs/banner.jpg" alt="Banner" class="banner-image" />
-    </div>
+    <div class="site-banner"><img src="/imgs/banner.jpg" alt="Banner" class="banner-image" /></div>
     <a class="site-title" rel="author" href="/">George Robinson</a>
     <nav class="site-nav">
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -44,10 +42,32 @@
 
 <main class="page-content" aria-label="Content">
   <div class="wrapper">
-    <div class="think-placeholder">
-      <h2>Think</h2>
-      <p>Coming soon.</p>
+    <h1 class="george-page-title">Think</h1>
+
+    <!-- ── Compose form ── -->
+    <div class="note-compose" id="noteCompose">
+      <input class="note-compose-title" id="noteTitle" type="text"
+             placeholder="New note…" autocomplete="off" spellcheck="true"
+             onfocus="expandCompose()">
+      <div class="note-compose-extra" id="noteComposeExtra">
+        <textarea class="note-compose-body" id="noteBody"
+                  placeholder="What are you thinking…" rows="5" spellcheck="true"></textarea>
+        <input class="note-compose-tags" id="noteTags" type="text"
+               placeholder="tags, comma-separated" autocomplete="off">
+        <div class="note-compose-actions">
+          <button class="btn-note-save" onclick="saveNote()">Save note</button>
+          <button class="btn-note-cancel" onclick="cancelCompose()">Cancel</button>
+          <span class="note-save-msg" id="noteSaveMsg"></span>
+        </div>
+      </div>
     </div>
+
+    <!-- ── Tag filter ── -->
+    <div class="tag-toggle-bar" id="thinkTags"></div>
+
+    <!-- ── Notes feed ── -->
+    <div class="notes-feed" id="notesFeed"></div>
+
   </div>
 </main>
 
@@ -56,16 +76,191 @@
   <div class="wrapper">
     <h2 class="footer-heading">George Robinson</h2>
     <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li><a class="u-email" href="mailto:george.r.maths@gmail.com">george.r.maths@gmail.com</a></li>
-        </ul>
-      </div>
+      <div class="footer-col footer-col-1"><ul class="contact-list"><li><a class="u-email" href="mailto:george.r.maths@gmail.com">george.r.maths@gmail.com</a></li></ul></div>
       <div class="footer-col footer-col-2"></div>
       <div class="footer-col footer-col-3"><p>AI researcher/mathematician.</p></div>
     </div>
   </div>
 </footer>
 
+<script>
+var THINK_KEY    = 'george-think-v1';
+var thinkSel     = new Set();
+var editingNoteId = null;
+
+// ── Storage ──
+function loadNotes() {
+  try { return JSON.parse(localStorage.getItem(THINK_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveNotes(notes) { localStorage.setItem(THINK_KEY, JSON.stringify(notes)); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function parseTags(str) {
+  return [...new Set(str.split(',').map(function(t){ return t.trim().toLowerCase(); }).filter(Boolean))];
+}
+function noteTags(notes) {
+  var s = new Set(); notes.forEach(function(n){ n.tags.forEach(function(t){ s.add(t); }); }); return [...s].sort();
+}
+
+// ── Compose ──
+function expandCompose() {
+  document.getElementById('noteCompose').classList.add('expanded');
+}
+
+function cancelCompose() {
+  editingNoteId = null;
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteBody').value  = '';
+  document.getElementById('noteTags').value  = '';
+  document.getElementById('noteCompose').classList.remove('expanded');
+  document.getElementById('noteSaveMsg').textContent = '';
+}
+
+function saveNote() {
+  var title = document.getElementById('noteTitle').value.trim();
+  var body  = document.getElementById('noteBody').value.trim();
+  var tags  = parseTags(document.getElementById('noteTags').value);
+
+  if (!title && !body) {
+    showNoteMsg('Write something first.', true); return;
+  }
+
+  var notes = loadNotes();
+  if (editingNoteId) {
+    var idx = notes.findIndex(function(n){ return n.id === editingNoteId; });
+    if (idx >= 0) {
+      notes[idx].title = title; notes[idx].body = body; notes[idx].tags = tags;
+      notes[idx].updatedAt = Date.now();
+    }
+  } else {
+    notes.push({ id: uid(), title: title, body: body, tags: tags, createdAt: Date.now() });
+  }
+  saveNotes(notes);
+  cancelCompose();
+  renderThinkTags();
+  renderFeed();
+}
+
+function showNoteMsg(msg, isErr) {
+  var el = document.getElementById('noteSaveMsg');
+  el.textContent = msg; el.className = 'note-save-msg' + (isErr ? ' err' : '');
+  clearTimeout(el._t); el._t = setTimeout(function(){ el.textContent = ''; }, 2500);
+}
+
+// ── Tag bar ──
+function renderThinkTags() {
+  var tags = noteTags(loadNotes());
+  var box  = document.getElementById('thinkTags');
+  box.innerHTML = '';
+  if (!tags.length) return;
+  tags.forEach(function(tag){
+    var btn = document.createElement('button');
+    btn.className = 'tag-toggle' + (thinkSel.has(tag) ? ' on' : '');
+    btn.textContent = tag;
+    btn.onclick = function(){ thinkSel.has(tag) ? thinkSel.delete(tag) : thinkSel.add(tag); renderThinkTags(); renderFeed(); };
+    box.appendChild(btn);
+  });
+}
+
+// ── Feed ──
+function renderFeed() {
+  var notes = loadNotes();
+  var feed  = document.getElementById('notesFeed');
+  feed.innerHTML = '';
+
+  var items = [...notes].reverse();
+  if (thinkSel.size) items = items.filter(function(n){ return n.tags.some(function(t){ return thinkSel.has(t); }); });
+
+  if (!items.length) {
+    var empty = document.createElement('p');
+    empty.className = 'notes-empty';
+    empty.textContent = notes.length ? 'No notes match the selected tags.' : 'No notes yet — write something above.';
+    feed.appendChild(empty); return;
+  }
+
+  items.forEach(function(note){
+    var card = document.createElement('div'); card.className = 'note-card';
+
+    // header
+    var hdr = document.createElement('div'); hdr.className = 'note-card-header';
+    var ttl = document.createElement('h3'); ttl.className = 'note-card-title';
+    ttl.textContent = note.title || '(untitled)';
+    var acts = document.createElement('div'); acts.className = 'note-card-actions';
+
+    var editBtn = document.createElement('button'); editBtn.className = 'note-btn note-btn-edit';
+    editBtn.textContent = '✎'; editBtn.title = 'Edit';
+    editBtn.onclick = function(){ editNote(note.id); };
+
+    var delBtn = document.createElement('button'); delBtn.className = 'note-btn note-btn-delete';
+    delBtn.textContent = '×'; delBtn.title = 'Delete';
+    delBtn.onclick = function(){
+      saveNotes(loadNotes().filter(function(n){ return n.id !== note.id; }));
+      renderThinkTags(); renderFeed();
+    };
+
+    acts.appendChild(editBtn); acts.appendChild(delBtn);
+    hdr.appendChild(ttl); hdr.appendChild(acts);
+    card.appendChild(hdr);
+
+    // body
+    if (note.body) {
+      var body = document.createElement('p'); body.className = 'note-card-body';
+      body.textContent = note.body; card.appendChild(body);
+    }
+
+    // footer
+    var ftr = document.createElement('div'); ftr.className = 'note-card-footer';
+    var tagsDiv = document.createElement('div'); tagsDiv.className = 'note-card-tags';
+    note.tags.forEach(function(tag){
+      var chip = document.createElement('span'); chip.className = 'tag-pill'; chip.textContent = tag;
+      tagsDiv.appendChild(chip);
+    });
+    var dateSpan = document.createElement('span'); dateSpan.className = 'note-card-date';
+    dateSpan.textContent = relDate(note.updatedAt || note.createdAt);
+    ftr.appendChild(tagsDiv); ftr.appendChild(dateSpan);
+    card.appendChild(ftr);
+
+    feed.appendChild(card);
+  });
+}
+
+function editNote(id) {
+  var note = loadNotes().find(function(n){ return n.id === id; });
+  if (!note) return;
+  editingNoteId = id;
+  document.getElementById('noteTitle').value = note.title || '';
+  document.getElementById('noteBody').value  = note.body  || '';
+  document.getElementById('noteTags').value  = note.tags.join(', ');
+  expandCompose();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('noteTitle').focus();
+}
+
+function relDate(ts) {
+  if (!ts) return '';
+  var diff = Date.now() - ts; var s = diff / 1000; var m = s / 60; var h = m / 60; var d = h / 24;
+  if (s < 60)  return 'just now';
+  if (m < 60)  return Math.floor(m) + 'm ago';
+  if (h < 24)  return Math.floor(h) + 'h ago';
+  if (d < 7)   return Math.floor(d) + 'd ago';
+  return new Date(ts).toLocaleDateString('en-GB', { day:'numeric', month:'short' });
+}
+
+// ── Keyboard shortcuts in compose ──
+document.addEventListener('DOMContentLoaded', function(){
+  document.getElementById('noteTitle').addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); expandCompose(); document.getElementById('noteBody').focus(); }
+    if (e.key === 'Escape') cancelCompose();
+  });
+  document.getElementById('noteBody').addEventListener('keydown', function(e){
+    if (e.key === 'Escape') cancelCompose();
+  });
+  document.getElementById('noteTags').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') saveNote();
+    if (e.key === 'Escape') cancelCompose();
+  });
+  renderThinkTags();
+  renderFeed();
+});
+</script>
 </body>
 </html>

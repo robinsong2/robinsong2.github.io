@@ -12,9 +12,7 @@
 
 <header class="site-header" role="banner">
   <div class="wrapper">
-    <div class="site-banner">
-      <img src="/imgs/banner.jpg" alt="Banner" class="banner-image" />
-    </div>
+    <div class="site-banner"><img src="/imgs/banner.jpg" alt="Banner" class="banner-image" /></div>
     <a class="site-title" rel="author" href="/">George Robinson</a>
     <nav class="site-nav">
       <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -44,25 +42,54 @@
 
 <main class="page-content" aria-label="Content">
   <div class="wrapper">
-
     <h1 class="george-page-title">Go</h1>
 
     <div class="tab-bar">
-      <button class="tab-btn active" data-tab="discover" onclick="switchTab('discover')">Discover</button>
-      <button class="tab-btn"        data-tab="browse"   onclick="switchTab('browse')">Browse</button>
-      <button class="tab-btn"        data-tab="add"      onclick="switchTab('add')">Add a link</button>
+      <button class="tab-btn active" data-tab="discover"  onclick="switchTab('discover')">Discover</button>
+      <button class="tab-btn"        data-tab="calendar"  onclick="switchTab('calendar')">Calendar</button>
+      <button class="tab-btn"        data-tab="browse"    onclick="switchTab('browse')">Browse</button>
+      <button class="tab-btn"        data-tab="add"       onclick="switchTab('add')">Add a link</button>
     </div>
 
+    <!-- Discover -->
     <div id="pane-discover" class="tab-pane active">
       <div class="discover-wrap">
         <h2 class="discover-heading">Where do you want to go?</h2>
-        <p class="discover-sub">Toggle tags to filter by type, or leave everything unselected to pick anything.</p>
+        <p class="discover-sub">Toggle tags to filter, or leave everything unselected to pick anything.</p>
         <div class="tag-toggle-bar" id="discoverTags"></div>
         <button class="btn-open" onclick="openRandom()">Open a random link</button>
         <div class="open-result" id="openResult"></div>
       </div>
     </div>
 
+    <!-- Calendar -->
+    <div id="pane-calendar" class="tab-pane">
+
+      <div class="tag-toggle-bar" id="calendarTags"></div>
+
+      <div class="scrape-bar">
+        <p class="scrape-bar-desc">Select tags above to choose which sites to scrape, then click Scrape. Uses a public proxy and works best on sites with structured event data (JSON-LD).</p>
+        <button class="btn-scrape" id="btnScrape" onclick="scrapeEvents()">Scrape</button>
+        <button class="btn-clear-cal" onclick="clearEvents()">Clear events</button>
+        <span class="scrape-status" id="scrapeStatus"></span>
+      </div>
+
+      <div class="cal-wrap">
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="calPrev()">&#8249;</button>
+          <span class="cal-nav-title" id="calTitle"></span>
+          <button class="cal-nav-btn" onclick="calNext()">&#8250;</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+
+      <div class="cal-events-section">
+        <h3 id="calEventsHeading">Upcoming events</h3>
+        <div class="cal-events-list" id="calEventsList"></div>
+      </div>
+    </div>
+
+    <!-- Browse -->
     <div id="pane-browse" class="tab-pane">
       <div class="browse-controls">
         <input class="browse-search" id="browseSearch" type="text"
@@ -73,6 +100,7 @@
       <div class="tiles-grid" id="tilesGrid"></div>
     </div>
 
+    <!-- Add -->
     <div id="pane-add" class="tab-pane">
       <div class="add-form">
         <div class="field">
@@ -101,11 +129,7 @@
   <div class="wrapper">
     <h2 class="footer-heading">George Robinson</h2>
     <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li><a class="u-email" href="mailto:george.r.maths@gmail.com">george.r.maths@gmail.com</a></li>
-        </ul>
-      </div>
+      <div class="footer-col footer-col-1"><ul class="contact-list"><li><a class="u-email" href="mailto:george.r.maths@gmail.com">george.r.maths@gmail.com</a></li></ul></div>
       <div class="footer-col footer-col-2"></div>
       <div class="footer-col footer-col-3"><p>AI researcher/mathematician.</p></div>
     </div>
@@ -116,15 +140,12 @@
 window.GAPP = {
   key: 'george-go-v1',
   seed: [
-    // Event discovery engines
     { url: 'https://www.meetup.com',                    title: 'Meetup',                       tags: ['events', 'community', 'social', 'groups'] },
     { url: 'https://www.eventbrite.co.uk',              title: 'Eventbrite',                   tags: ['london', 'events', 'discovery'] },
     { url: 'https://dice.fm',                           title: 'Dice FM',                      tags: ['london', 'events', 'music', 'live'] },
     { url: 'https://www.designmynight.com',             title: 'Design My Night',              tags: ['london', 'events', 'social', 'experiences'] },
     { url: 'https://lu.ma',                             title: 'Luma',                         tags: ['events', 'community', 'intellectual'] },
     { url: 'https://partiful.com',                      title: 'Partiful',                     tags: ['social', 'community', 'events'] },
-
-    // Talks / Lectures / Debates
     { url: 'https://www.pintsofknowledge.com',          title: 'Pints of Knowledge',           tags: ['london', 'events', 'talks', 'science', 'philosophy'] },
     { url: 'https://www.intelligencesquared.com',       title: 'Intelligence Squared',         tags: ['london', 'events', 'debates', 'culture', 'ideas'] },
     { url: 'https://howtoacademy.com',                  title: 'How To Academy',               tags: ['london', 'events', 'talks', 'authors', 'ideas'] },
@@ -133,8 +154,6 @@ window.GAPP = {
     { url: 'https://www.gresham.ac.uk',                 title: 'Gresham College',              tags: ['london', 'events', 'lectures', 'mathematics', 'history', 'free'] },
     { url: 'https://conwayhall.org.uk',                 title: 'Conway Hall',                  tags: ['london', 'events', 'ethics', 'politics', 'music'] },
     { url: 'https://www.londonreviewbookshop.co.uk',    title: 'London Review Bookshop',       tags: ['london', 'events', 'literary', 'talks'] },
-
-    // Arts / Culture Venues
     { url: 'https://www.serpentinegalleries.org',       title: 'Serpentine Galleries',         tags: ['london', 'art', 'architecture', 'design', 'free'] },
     { url: 'https://www.somersethouse.org.uk',          title: 'Somerset House',               tags: ['london', 'events', 'arts', 'culture', 'festivals'] },
     { url: 'https://www.barbican.org.uk',               title: 'Barbican Centre',              tags: ['london', 'events', 'film', 'music', 'theatre', 'talks'] },
@@ -142,19 +161,223 @@ window.GAPP = {
     { url: 'https://www.bishopsgate.org.uk',            title: 'Bishopsgate Institute',        tags: ['london', 'events', 'history', 'talks', 'free'] },
     { url: 'https://thephotographersgallery.org.uk',    title: "The Photographers' Gallery",   tags: ['london', 'events', 'photography', 'visual', 'free'] },
     { url: 'https://www.independentcinemaoffice.org.uk',title: 'Independent Cinema Office',    tags: ['london', 'events', 'film', 'culture'] },
-
-    // Community / Coworking / Spaces
     { url: 'https://www.hackneywickspaces.org',         title: 'Hackney Wick Spaces',          tags: ['london', 'art', 'community', 'studios', 'east-london'] },
     { url: 'https://secondhome.io',                     title: 'Second Home',                  tags: ['london', 'events', 'creative', 'community'] },
     { url: 'https://theconduit.com',                    title: 'The Conduit',                  tags: ['london', 'events', 'policy', 'culture', 'community'] },
     { url: 'https://newspeak.house',                    title: 'Newspeak House',               tags: ['london', 'events', 'tech', 'politics', 'community'] },
     { url: 'https://www.theonioncollective.co.uk',      title: 'The Onion Collective',         tags: ['london', 'creative', 'social', 'community'] },
-
-    // Exploration
     { url: 'https://www.atlasobscura.com',              title: 'Atlas Obscura',                tags: ['london', 'exploration', 'hidden', 'history', 'oddities'] },
   ]
 };
 </script>
 <script src="/george/george-app.js"></script>
+<script>
+// ── Calendar extension ──────────────────────────────────────────────────────
+var CAL_KEY = 'george-go-events-v1';
+var calYear, calMonth, calSelectedDay = null;
+
+function calEventsLoad() {
+  try { return JSON.parse(localStorage.getItem(CAL_KEY) || '[]'); } catch(e) { return []; }
+}
+function calEventsSave(ev) { localStorage.setItem(CAL_KEY, JSON.stringify(ev)); }
+
+// Hook into george-app.js tab switcher
+window.onExtraTab = function(name) {
+  if (name === 'calendar') {
+    renderTagBar('calendarTags', function(){ renderCalendarGrid(); renderCalEventList(); });
+    if (!calYear) {
+      var now = new Date(); calYear = now.getFullYear(); calMonth = now.getMonth();
+    }
+    renderCalendarGrid();
+    renderCalEventList();
+  }
+};
+
+function calPrev() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendarGrid(); renderCalEventList(); }
+function calNext() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendarGrid(); renderCalEventList(); }
+
+function renderCalendarGrid() {
+  var events = calEventsLoad();
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calTitle').textContent = MONTHS[calMonth] + ' ' + calYear;
+
+  // Build day → events map
+  var byDay = {};
+  events.forEach(function(ev) {
+    var d = new Date(ev.date);
+    if (isNaN(d)) return;
+    if (d.getFullYear() === calYear && d.getMonth() === calMonth) {
+      var day = d.getDate();
+      if (!byDay[day]) byDay[day] = [];
+      byDay[day].push(ev);
+    }
+  });
+
+  var grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n){
+    var th = document.createElement('div'); th.className = 'cal-dayname'; th.textContent = n; grid.appendChild(th);
+  });
+
+  var firstDay = (new Date(calYear, calMonth, 1).getDay() + 6) % 7; // Mon=0
+  for (var i = 0; i < firstDay; i++) {
+    var blank = document.createElement('div'); blank.className = 'cal-day cal-day-empty'; grid.appendChild(blank);
+  }
+
+  var today = new Date(); var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  for (var d = 1; d <= daysInMonth; d++) {
+    var cell = document.createElement('div'); cell.className = 'cal-day';
+    var isToday = today.getFullYear() === calYear && today.getMonth() === calMonth && today.getDate() === d;
+    if (isToday) cell.classList.add('cal-today');
+    if (calSelectedDay === d) cell.classList.add('cal-selected');
+
+    var num = document.createElement('span'); num.className = 'cal-day-num'; num.textContent = d;
+    cell.appendChild(num);
+
+    if (byDay[d] && byDay[d].length) {
+      var dots = document.createElement('div'); dots.className = 'cal-dots';
+      var max = Math.min(byDay[d].length, 4);
+      for (var j = 0; j < max; j++) { var dot = document.createElement('span'); dot.className = 'cal-dot'; dots.appendChild(dot); }
+      cell.appendChild(dots);
+    }
+
+    (function(day){ cell.onclick = function(){
+      calSelectedDay = (calSelectedDay === day) ? null : day;
+      renderCalendarGrid(); renderCalEventList();
+    }; })(d);
+    grid.appendChild(cell);
+  }
+}
+
+function renderCalEventList() {
+  var events = calEventsLoad();
+  var list    = document.getElementById('calEventsList');
+  var heading = document.getElementById('calEventsHeading');
+  var now     = new Date();
+  list.innerHTML = '';
+
+  var filtered = events.filter(function(ev){
+    var d = new Date(ev.date); if (isNaN(d)) return false;
+    if (calSelectedDay !== null) {
+      return d.getFullYear() === calYear && d.getMonth() === calMonth && d.getDate() === calSelectedDay;
+    }
+    return d >= now;
+  }).sort(function(a,b){ return new Date(a.date) - new Date(b.date); });
+
+  heading.textContent = calSelectedDay
+    ? 'Events on ' + calSelectedDay + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][calMonth]
+    : 'Upcoming events';
+
+  if (!filtered.length) {
+    var empty = document.createElement('p'); empty.className = 'cal-empty';
+    empty.textContent = events.length ? (calSelectedDay ? 'No events on this day.' : 'No upcoming events found.') : 'No events yet — try scraping!';
+    list.appendChild(empty); return;
+  }
+
+  filtered.forEach(function(ev){
+    var item = document.createElement('a');
+    item.className = 'cal-event-item';
+    item.href = ev.url || ev.sourceUrl || '#';
+    item.target = '_blank'; item.rel = 'noopener noreferrer';
+
+    var d = new Date(ev.date);
+    var dateStr = d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
+    if (d.getHours() || d.getMinutes()) dateStr += ', ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+
+    var meta = document.createElement('div'); meta.className = 'cal-event-meta';
+    meta.textContent = dateStr + (ev.source ? ' · ' + ev.source : '');
+
+    var title = document.createElement('div'); title.className = 'cal-event-title';
+    title.textContent = ev.title;
+
+    item.appendChild(meta); item.appendChild(title);
+    list.appendChild(item);
+  });
+}
+
+function clearEvents() {
+  calEventsSave([]);
+  document.getElementById('scrapeStatus').textContent = 'Events cleared.';
+  renderCalendarGrid(); renderCalEventList();
+}
+
+// ── Scraper ──────────────────────────────────────────────────────────────────
+async function scrapeEvents() {
+  var links = load();  // george-go-v1 links
+  var pool  = sel.size ? links.filter(function(l){ return l.tags.some(function(t){ return sel.has(t); }); }) : links;
+
+  var btn    = document.getElementById('btnScrape');
+  var status = document.getElementById('scrapeStatus');
+  btn.disabled = true;
+
+  var existing  = calEventsLoad();
+  var seenUrls  = new Set(existing.map(function(e){ return e.url; }));
+  var newEvents = [];
+  var tried = 0, found = 0, failed = 0;
+
+  for (var i = 0; i < pool.length; i++) {
+    var link = pool[i]; tried++;
+    status.textContent = '(' + tried + '/' + pool.length + ') Scraping ' + link.title + '…';
+    try {
+      var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(link.url);
+      var ctrl = new AbortController();
+      var timer = setTimeout(function(){ ctrl.abort(); }, 10000);
+      var resp = await fetch(proxyUrl, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!resp.ok) { failed++; continue; }
+      var html = await resp.text();
+      var parsed = extractJsonLdEvents(html, link);
+      parsed.forEach(function(ev){
+        if (ev.url && seenUrls.has(ev.url)) return;
+        if (ev.url) seenUrls.add(ev.url);
+        newEvents.push(ev); found++;
+      });
+    } catch(e) { failed++; }
+  }
+
+  calEventsSave(existing.concat(newEvents));
+  renderCalendarGrid(); renderCalEventList();
+
+  var msg = 'Found ' + found + ' new event' + (found !== 1 ? 's' : '') + ' from ' + tried + ' site' + (tried !== 1 ? 's' : '');
+  if (failed) msg += ' (' + failed + ' failed/timed out)';
+  status.textContent = msg + '.';
+  btn.disabled = false;
+}
+
+function extractJsonLdEvents(html, sourceLink) {
+  var results = [];
+  var now = new Date();
+  var parser = new DOMParser();
+  var doc = parser.parseFromString(html, 'text/html');
+
+  doc.querySelectorAll('script[type="application/ld+json"]').forEach(function(script){
+    try {
+      var data = JSON.parse(script.textContent);
+      var items = Array.isArray(data) ? data : (data['@graph'] ? data['@graph'] : [data]);
+      items.forEach(function(item){
+        var type = item['@type'] || '';
+        var types = Array.isArray(type) ? type : [type];
+        var isEvent = types.some(function(t){ return /event/i.test(t); });
+        if (!isEvent || !item.startDate) return;
+        var start = new Date(item.startDate);
+        if (isNaN(start) || start < now) return;
+        var url = item.url || item['@id'] || '';
+        if (url && !/^https?:\/\//.test(url)) url = sourceLink.url;
+        results.push({
+          id:        uid(),
+          title:     item.name || '(untitled event)',
+          date:      item.startDate,
+          url:       url || sourceLink.url,
+          source:    sourceLink.title,
+          sourceUrl: sourceLink.url
+        });
+      });
+    } catch(e) {}
+  });
+
+  return results;
+}
+</script>
 </body>
 </html>
