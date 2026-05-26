@@ -36,7 +36,6 @@
   <div class="wrapper">
     <a href="/george/read"  class="george-subnav-link">Read</a>
     <a href="/george/go"    class="george-subnav-link active">Go</a>
-    <a href="/george/think" class="george-subnav-link">Think</a>
   </div>
 </nav>
 
@@ -68,24 +67,25 @@
       <div class="tag-toggle-bar" id="calendarTags"></div>
 
       <div class="scrape-bar">
-        <p class="scrape-bar-desc">Select tags above to choose which sites to scrape, then click Scrape. Uses a public proxy and works best on sites with structured event data (JSON-LD).</p>
+        <p class="scrape-bar-desc">Select tags above to filter which sites to scrape, then click Scrape. Works best on sites with structured event data (JSON-LD).</p>
         <button class="btn-scrape" id="btnScrape" onclick="scrapeEvents()">Scrape</button>
         <button class="btn-clear-cal" onclick="clearEvents()">Clear events</button>
         <span class="scrape-status" id="scrapeStatus"></span>
       </div>
 
-      <div class="cal-wrap">
-        <div class="cal-nav">
-          <button class="cal-nav-btn" onclick="calPrev()">&#8249;</button>
-          <span class="cal-nav-title" id="calTitle"></span>
-          <button class="cal-nav-btn" onclick="calNext()">&#8250;</button>
+      <div class="cal-layout">
+        <div class="cal-wrap">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calPrev()">&#8249;</button>
+            <span class="cal-nav-title" id="calTitle"></span>
+            <button class="cal-nav-btn" onclick="calNext()">&#8250;</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
         </div>
-        <div class="cal-grid" id="calGrid"></div>
-      </div>
-
-      <div class="cal-events-section">
-        <h3 id="calEventsHeading">Upcoming events</h3>
-        <div class="cal-events-list" id="calEventsList"></div>
+        <div class="cal-sidebar">
+          <p class="cal-sidebar-heading" id="calEventsHeading">Upcoming events</p>
+          <div class="cal-events-list" id="calEventsList"></div>
+        </div>
       </div>
     </div>
 
@@ -236,10 +236,18 @@ function renderCalendarGrid() {
     cell.appendChild(num);
 
     if (byDay[d] && byDay[d].length) {
-      var dots = document.createElement('div'); dots.className = 'cal-dots';
-      var max = Math.min(byDay[d].length, 4);
-      for (var j = 0; j < max; j++) { var dot = document.createElement('span'); dot.className = 'cal-dot'; dots.appendChild(dot); }
-      cell.appendChild(dots);
+      var evs = byDay[d];
+      var chips = document.createElement('div'); chips.className = 'cal-day-chips';
+      var show = Math.min(evs.length, 3);
+      for (var j = 0; j < show; j++) {
+        var chip = document.createElement('div'); chip.className = 'cal-chip';
+        chip.textContent = evs[j].title; chips.appendChild(chip);
+      }
+      if (evs.length > 3) {
+        var more = document.createElement('div'); more.className = 'cal-chip-more';
+        more.textContent = '+' + (evs.length - 3) + ' more'; chips.appendChild(more);
+      }
+      cell.appendChild(chips);
     }
 
     (function(day){ cell.onclick = function(){

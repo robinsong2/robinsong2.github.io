@@ -98,7 +98,7 @@
 
 /* tile action buttons (edit + delete), appear on hover */
 .tile-actions {
-  position: absolute; top: 0.55rem; right: 0.6rem;
+  position: absolute; top: 0.55rem; right: 0.6rem; z-index: 2;
   display: flex; gap: 0.1rem; opacity: 0; transition: opacity 0.15s;
 }
 .tile:hover .tile-actions { opacity: 1; }
@@ -187,119 +187,51 @@
 .btn-clear-cal:hover { background: #f0f0f0; }
 .scrape-status { font-size: 0.82rem; color: #828282; font-style: italic; flex-basis: 100%; }
 
-.cal-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 1rem 1rem 0.75rem; margin-bottom: 1.25rem; }
-.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
-.cal-nav-title { font-size: 1rem; font-weight: 600; color: #111; }
+.cal-layout { display: grid; grid-template-columns: 1fr 300px; gap: 1.25rem; align-items: start; }
+@media (max-width: 860px) { .cal-layout { grid-template-columns: 1fr; } }
+
+.cal-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 1.1rem; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.cal-nav-title { font-size: 1rem; font-weight: 700; color: #111; letter-spacing: -0.3px; }
 .cal-nav-btn {
-  background: none; border: 1px solid #e8e8e8; border-radius: 5px;
-  padding: 0.2rem 0.65rem; cursor: pointer; font-size: 1rem; color: #555;
+  background: none; border: 1px solid #e0e0e0; border-radius: 6px;
+  padding: 0.22rem 0.65rem; cursor: pointer; font-size: 1rem; color: #555;
   font-family: inherit; transition: background 0.12s;
 }
 .cal-nav-btn:hover { background: #f0f0f0; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-.cal-dayname { text-align: center; font-size: 0.7rem; font-weight: 700; color: #aaa; text-transform: uppercase; padding: 0.3rem 0 0.5rem; }
-.cal-day { min-height: 2.75rem; padding: 0.2rem 0.25rem; border-radius: 5px; cursor: pointer; transition: background 0.1s; }
-.cal-day-empty { cursor: default; }
+
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 1px; background: #e8e8e8; border: 1px solid #e8e8e8; border-radius: 8px; overflow: hidden;
+}
+.cal-dayname { background: #f5f5f5; text-align: center; font-size: 0.65rem; font-weight: 700; color: #999; text-transform: uppercase; padding: 0.45rem 0; }
+.cal-day { background: #fff; min-height: 5rem; padding: 0.35rem 0.3rem; cursor: pointer; transition: background 0.1s; }
+.cal-day-empty { background: #fcfcfc; cursor: default; }
 .cal-day:not(.cal-day-empty):hover { background: #f5f7ff; }
 .cal-day.cal-selected { background: #eaf0fc !important; }
 .cal-day-num {
-  font-size: 0.8rem; color: #444; display: inline-flex; align-items: center;
-  justify-content: center; width: 1.55rem; height: 1.55rem; border-radius: 50%;
+  font-size: 0.78rem; font-weight: 500; color: #444;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.55rem; height: 1.55rem; border-radius: 50%;
 }
 .cal-today .cal-day-num { background: #2a7ae2; color: #fff; font-weight: 700; }
-.cal-dots { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 1px; padding-left: 0.1rem; }
-.cal-dot { width: 5px; height: 5px; border-radius: 50%; background: #2a7ae2; display: inline-block; }
 
-.cal-events-section h3 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #aaa; margin: 0 0 0.75rem; }
+.cal-day-chips { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
+.cal-chip {
+  font-size: 0.63rem; line-height: 1.4; color: #2a7ae2; background: #eaf0fc;
+  border-radius: 3px; padding: 1px 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-chip-more { font-size: 0.62rem; color: #bbb; padding-left: 2px; margin-top: 1px; }
+
+.cal-sidebar { background: #fff; border: 1px solid #e8e8e8; border-radius: 12px; padding: 1rem 1.1rem; max-height: 680px; overflow-y: auto; }
+.cal-sidebar-heading { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #aaa; margin: 0 0 0.9rem; }
 .cal-events-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .cal-event-item {
-  display: block; background: #fff; border: 1px solid #e8e8e8; border-radius: 8px;
-  padding: 0.65rem 0.9rem; text-decoration: none;
-  transition: border-color 0.12s, box-shadow 0.12s;
+  display: block; padding: 0.7rem 0.85rem; border: 1px solid #e8e8e8; border-radius: 8px;
+  text-decoration: none; transition: border-color 0.12s, box-shadow 0.12s;
 }
 .cal-event-item:hover { border-color: #2a7ae2; box-shadow: 0 2px 8px rgba(42,122,226,0.1); text-decoration: none; }
-.cal-event-meta { font-size: 0.74rem; color: #aaa; margin-bottom: 0.15rem; }
-.cal-event-title { font-size: 0.9rem; font-weight: 600; color: #111; line-height: 1.35; }
-.cal-empty { text-align: center; color: #aaa; font-style: italic; padding: 1.5rem 0; }
-
-/* ── Think / Notes page ── */
-.think-page { padding-top: 0.5rem; }
-
-.note-compose {
-  background: #fff; border: 1px solid #e8e8e8; border-radius: 10px;
-  padding: 0.85rem 1rem; margin-bottom: 1.5rem;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.note-compose.expanded,
-.note-compose:focus-within {
-  border-color: #2a7ae2;
-  box-shadow: 0 0 0 3px rgba(42,122,226,0.1);
-}
-.note-compose-title {
-  width: 100%; border: none; outline: none; font-size: 1rem;
-  font-family: inherit; color: #111; background: transparent; padding: 0; display: block;
-}
-.note-compose-title::placeholder { color: #aaa; }
-.note-compose-extra {
-  max-height: 0; overflow: hidden; opacity: 0;
-  transition: max-height 0.25s ease, opacity 0.2s ease;
-}
-.note-compose.expanded .note-compose-extra { max-height: 320px; opacity: 1; }
-.note-compose-body {
-  display: block; width: 100%; border: none; border-top: 1px solid #f0f0f0; outline: none;
-  font-size: 0.95rem; font-family: inherit; color: #333; background: transparent;
-  resize: none; margin-top: 0.75rem; padding-top: 0.75rem; box-sizing: border-box;
-  line-height: 1.6;
-}
-.note-compose-tags {
-  display: block; width: 100%; border: none; border-top: 1px solid #f0f0f0; outline: none;
-  font-size: 0.85rem; font-family: inherit; color: #888; background: transparent;
-  margin-top: 0.5rem; padding-top: 0.5rem; box-sizing: border-box;
-}
-.note-compose-tags::placeholder { color: #ccc; }
-.note-compose-actions {
-  display: flex; align-items: center; gap: 0.5rem;
-  margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #f0f0f0;
-}
-.btn-note-save {
-  background: #2a7ae2; color: #fff; border: none; border-radius: 5px;
-  padding: 0.45rem 1.1rem; font-size: 0.9rem; font-family: inherit; font-weight: 600;
-  cursor: pointer; transition: background 0.15s;
-}
-.btn-note-save:hover { background: #1a6ad2; }
-.btn-note-cancel {
-  background: transparent; color: #828282; border: 1px solid #ccc; border-radius: 5px;
-  padding: 0.45rem 0.9rem; font-size: 0.9rem; font-family: inherit; cursor: pointer;
-  transition: background 0.12s;
-}
-.btn-note-cancel:hover { background: #f0f0f0; }
-.note-save-msg { font-size: 0.85rem; color: #2e7d32; font-weight: 500; }
-.note-save-msg.err { color: #c0392b; }
-
-.notes-feed { display: flex; flex-direction: column; gap: 0.85rem; }
-.note-card {
-  background: #fff; border: 1px solid #e8e8e8; border-radius: 10px;
-  padding: 1rem 1.1rem; position: relative;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.note-card:hover { border-color: #ccc; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
-.note-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-.note-card-title { font-size: 1rem; font-weight: 600; color: #111; margin: 0; line-height: 1.3; }
-.note-card-actions { display: flex; gap: 0.1rem; opacity: 0; flex-shrink: 0; transition: opacity 0.15s; }
-.note-card:hover .note-card-actions { opacity: 1; }
-.note-btn {
-  background: none; border: none; cursor: pointer; padding: 0.15rem 0.3rem;
-  border-radius: 3px; font-size: 1rem; color: #ccc; font-family: inherit;
-  transition: color 0.12s, background 0.12s;
-}
-.note-btn-edit:hover   { color: #555; background: #f0f0f0; }
-.note-btn-delete:hover { color: #c0392b; background: #fdecea; }
-.note-card-body {
-  color: #555; font-size: 0.92rem; line-height: 1.65; margin: 0.5rem 0 0;
-  white-space: pre-wrap;
-  display: -webkit-box; -webkit-line-clamp: 8; -webkit-box-orient: vertical; overflow: hidden;
-}
-.note-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem; gap: 0.5rem; }
-.note-card-tags { display: flex; flex-wrap: wrap; gap: 0.2rem; }
-.note-card-date { font-size: 0.75rem; color: #bbb; white-space: nowrap; flex-shrink: 0; }
-.notes-empty { text-align: center; color: #aaa; font-style: italic; padding: 2.5rem 0; }
+.cal-event-meta { font-size: 0.72rem; color: #aaa; margin-bottom: 0.2rem; }
+.cal-event-title { font-size: 0.88rem; font-weight: 600; color: #111; line-height: 1.35; }
+.cal-empty { text-align: center; color: #bbb; font-style: italic; padding: 2rem 0; font-size: 0.9rem; }
