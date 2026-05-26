@@ -86,28 +86,6 @@ function renderBrowse() {
     tile.className = 'tile';
     tile.dataset.lid = link.id;
 
-    // ── action buttons (edit + delete) ──
-    var actions = document.createElement('div');
-    actions.className = 'tile-actions';
-
-    var editBtn = document.createElement('button');
-    editBtn.className = 'tile-action-btn tile-edit-btn';
-    editBtn.title = 'Edit'; editBtn.textContent = '✎';
-    editBtn.onclick = function(e){ e.preventDefault(); editLink(link.id); };
-
-    var delBtn = document.createElement('button');
-    delBtn.className = 'tile-action-btn tile-delete-btn';
-    delBtn.title = 'Remove'; delBtn.textContent = '×';
-    delBtn.onclick = function(e){
-      e.preventDefault();
-      save(load().filter(function(l){ return l.id !== link.id; }));
-      var remaining = load();
-      sel.forEach(function(t){ if (!allTags(remaining).includes(t)) sel.delete(t); });
-      renderBrowse(); renderDiscover();
-    };
-
-    actions.appendChild(editBtn); actions.appendChild(delBtn);
-
     var a = document.createElement('a');
     a.className = 'tile-title'; a.href = link.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
     a.textContent = link.title;
@@ -124,8 +102,29 @@ function renderBrowse() {
       tagsDiv.appendChild(chip);
     });
 
-    tile.appendChild(actions); tile.appendChild(a); tile.appendChild(urlSpan);
+    var footer = document.createElement('div');
+    footer.className = 'tile-footer';
+
+    var editBtn = document.createElement('button');
+    editBtn.className = 'tile-edit-btn';
+    editBtn.textContent = 'Edit';
+    editBtn.onclick = function(e){ e.preventDefault(); editLink(link.id); };
+
+    var delBtn = document.createElement('button');
+    delBtn.className = 'tile-delete-btn';
+    delBtn.textContent = 'Remove';
+    delBtn.onclick = function(e){
+      e.preventDefault();
+      save(load().filter(function(l){ return l.id !== link.id; }));
+      var remaining = load();
+      sel.forEach(function(t){ if (!allTags(remaining).includes(t)) sel.delete(t); });
+      renderBrowse();
+    };
+
+    footer.appendChild(editBtn); footer.appendChild(delBtn);
+    tile.appendChild(a); tile.appendChild(urlSpan);
     if (link.tags.length) tile.appendChild(tagsDiv);
+    tile.appendChild(footer);
     grid.appendChild(tile);
   });
 }
@@ -163,7 +162,7 @@ function editLink(id) {
     var ls  = load();
     var idx = ls.findIndex(function(l){ return l.id === id; });
     if (idx >= 0) { ls[idx].title = newTitle || newUrl; ls[idx].url = newUrl; ls[idx].tags = newTags; save(ls); }
-    renderBrowse(); renderDiscover();
+    renderBrowse();
   };
 
   var cancelBtn = document.createElement('button'); cancelBtn.className = 'btn-tile-cancel'; cancelBtn.textContent = 'Cancel';
